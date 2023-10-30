@@ -1,0 +1,113 @@
+/* responsive */
+
+@media (max-width: 500px) {
+  html,
+  body {
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  header {
+    padding-top: 5px;
+    gap: 10px;
+  }
+
+  .headerimg {
+    width: 150px;
+    height: auto;
+  }
+
+  form {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .navigation {
+    margin-top: -555px;
+    gap: 65px;
+  }
+
+  .large-types-container {
+    display: flex;
+    padding-left: 190px;
+    top: -72px;
+    z-index: 1;
+  }
+
+  .Pokename {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-left: 190px;
+    top: -115px;
+    height: 20px;
+  }
+
+  .main-detail-container {
+    margin-top: 5px;
+    overflow: hidden;
+  }
+
+  .pokeball-img-large {
+    position: absolute;
+    width: 270px;
+    height: 270px;
+    padding-left: 150px;
+    opacity: 0.3;
+    top: 155px;
+  }
+
+  .pokemon-img-large {
+    width: 175px;
+    height: 175px;
+    top: -65px;
+    z-index: 999;
+  }
+
+  .pokemon-details {
+    max-width: 310px;
+    height: 570px;
+  }
+
+  .info-container {
+    position: relative;
+    margin-top: 245px;
+    width: 310px;
+    height: 288px;
+  }
+
+  .info-container-names {
+    margin-top: 0;
+  }
+
+  .tab {
+    height: 35px;
+  }
+
+  .tabs {
+    display: flex;
+    justify-content: center;    
+    height: 35px;
+    font-size: 16px;
+  }
+
+  .tab.selected {
+    align-items: flex-end;
+    height: 35px;
+    font-size: 10px;
+  }
+
+  .tab-contents {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  p {
+    margin-top: 7px;
+    margin-bottom: 7px;
+  }
+
+  ul {
+    margin-top: 7px;
+  }
+}
