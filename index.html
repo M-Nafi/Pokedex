@@ -1,73 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>    
-    <link rel="icon" type="image/png" href="./img/pokeballfavicon.png"/>    
-    <script src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="style.css"/>
-    <link rel="stylesheet" href="responsive.css"/>
-    <link rel="stylesheet" href="colors.css"/>        
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>  <!--sweet alert function-->
-    <title>Pokedex</title>
-  </head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="./img/pokeballfavicon.png" />
+        <script src="script.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="responsive.css" />
+        <link rel="stylesheet" href="colors.css" />
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+        <!--sweet alert function-->
+        <title>Pokedex</title>
+    </head>
 
-  <body onload="loadPokemons()">
-    <header id="pokemonheader"><img class="headerimg" src="./img/pokedex.png"/></header>
-    <form>
-      <input class="searching" type="text" id="search" placeholder=" ...search for Pokemon">        
-      <button class="searching1" onclick="filterNames(event)">Go!</button>
-     </form>      
+    <body onload="loadPokemons()">
 
-    <div class="main-container" id="main-container"></div>
+        <header id="pokemonheader">
+          <div>
+            <img class="headerimg" src="./img/pokedex.png" />
+          </div>
+          <div>
+            <form>
+              <input class="searching" type="text" id="search" placeholder=" ...search for Pokemon"/>
+              <button class="searching1" onclick="filterNames(event)">Go!</button>
+            </form>
+          </div>
+        </header>
 
-<div class="main-detail-container d-none" id="main-detail-container">
-  <div class="pokemon-details d-none" id="pokemon-details"></div>
+        <div class="main-container" id="main-container"></div>
 
-  
+        <div class="main-detail-container d-none" id="main-detail-container">
 
-  <div class="navigation">
-    <img class="navigation-image" src="./img/previous1.png" onclick="previousPokemon()"/>
-    <img class="navigation-image" src="./img/cancel1.png" onclick="closePokemon()"/>
-    <img class="navigation-image" src="./img/next1.png" onclick="nextPokemon()"/>
-  </div>
+            <div class="pokemon-details d-none" id="pokemon-details"></div>
 
-  <div class="info-container">
-    <div class="tabs">
-      <div class="tab about" id="about-tab" onclick="showAbout()">
-        <h2 class="info-container-names">About</h2>
-      </div>
-      <div class="tab base-stats" id="base-stats-tab" onclick="showBaseStats()">
-        <h2 class="info-container-names">Base Stats</h2>
-      </div>
-      <div class="tab moves" id="moves-tab" onclick="showMoves()">
-        <h2 class="info-container-names">Moves</h2>
-      </div>
-    </div>
+            <div class="navigation">
+                <img class="navigation-image" src="./img/previous1.png"
+                    onclick="previousPokemon()"/>
+                <img class="navigation-image" src="./img/cancel1.png"
+                    onclick="closePokemon()"/>
+                <img class="navigation-image" src="./img/next1.png"
+                    onclick="nextPokemon()"/>
+            </div>
 
-    <div class="tab-contents" id="tab-contents">
-      <div id="about-contents" class="tab-content">
-        <p><b>Height:</b> <span id="height"></span></p>
-        <p><b>Weight:</b> <span id="weight"></span></p>
-        <p><b>Abilities:</b></p>
-        <ul id="abilities"></ul>
-      </div>
+            <div class="info-container">
+                <div class="tabs">
+                    <div class="tab about" id="about-tab" onclick="showAbout()">
+                        <h2 class="info-container-names">About</h2>
+                    </div>
+                    <div class="tab base-stats" id="base-stats-tab"
+                        onclick="showBaseStats()">
+                        <h2 class="info-container-names">Base Stats</h2>
+                    </div>
+                    <div class="tab moves" id="moves-tab" onclick="showMoves()">
+                        <h2 class="info-container-names">Moves</h2>
+                    </div>
+                </div>
 
-      <div id="base-contents" class="tab-content d-none">
-        <canvas id="base-stats-chart"></canvas>
-      </div>
+                <div class="tab-contents" id="tab-contents">
+                    <div id="about-contents" class="tab-content">
+                        <p><b>Height:</b> <span id="height"></span></p>
+                        <p><b>Weight:</b> <span id="weight"></span></p>
+                        <p><b>Abilities:</b></p>
+                        <ul id="abilities"></ul>
+                    </div>
 
-      <div id="move-contents" class="tab-content d-none">
-        <ul id="moves-list"></ul>
-      </div>
-    </div>
-  </div>
-</div>
+                    <div id="base-contents" class="tab-content d-none">
+                        <canvas id="base-stats-chart"></canvas>
+                    </div>
 
-<div id="loadmore" class="lomopo">
-  <img class="loadmorePokemon" src="./img/loadmorepokemon.png" onclick="loadMore()">  
-</div>
-    
-  </body>
+                    <div id="move-contents" class="tab-content d-none">
+                        <ul id="moves-list"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="loadmore" class="lomopo">
+            <img class="loadmorePokemon" 
+                src="./img/loadmorepokemon.png" onclick="loadMore()"/>
+        </div>
+    </body>
 </html>
