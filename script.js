@@ -6,10 +6,6 @@ let allPokemon = [];
 let cardBackgroundColors = [];
 let baseStatsChart;
 
-/**
- * Fetches a Pokemon from the PokeAPI and adds it to the list of all Pokemon
- * @param {string} data - The Pokemon's name or ID
- */
 async function loadPokemon(data) {
     let url = `https://pokeapi.co/api/v2/pokemon/${data}`;
     let response = await fetch(url);
@@ -24,13 +20,6 @@ async function loadPokemon(data) {
     generateMainContainer(pokemon, index, typesHTML);
 }
 
-/**
- * Generates the HTML for the main container and appends it
- * to the #main-container element.
- * @param {object} currentPokemon - The Pokemon object
- * @param {number} index - The index of the Pokemon in the allPokemon array
- * @param {string} typesHTML - The HTML for the Pokemon's types
- */
 function generateMainContainer(currentPokemon, index, typesHTML) {
     let mainContainer = document.getElementById('main-container');
     mainContainer.innerHTML += generatePokemonDiv(
@@ -41,21 +30,12 @@ function generateMainContainer(currentPokemon, index, typesHTML) {
     );
 }
 
-/**
- * Loads a set number of Pokemon by calling loadPokemon for each
- * Pokemon ID ranging from 1 to numberOfPokemons.
- */
 function loadPokemons() {
     for (let i = 1; i <= numberOfPokemons; i++) {
         loadPokemon(i);
     }
 }
 
-/**
- * Loads the next set of Pokemon by calling loadPokemon for each Pokemon ID
- * ranging from the current numberOfPokemons + 1 to numberOfPokemons + more.
- * @async
- */
 async function loadMore() {
     for (let i = numberOfPokemons + 1; i <= numberOfPokemons + more; i++) {
         loadPokemon(i);
@@ -63,14 +43,6 @@ async function loadMore() {
     numberOfPokemons += more;
 }
 
-/**
- * Generates the HTML for a Pokemon card and returns it as a string
- * @param {object} currentPokemon - The Pokemon object
- * @param {string} cardBackgroundColors - The Pokemon's type, used for the card's background color
- * @param {number} index - The index of the Pokemon in the allPokemon array
- * @param {string} typesHTML - The HTML for the Pokemon's types
- * @returns {string} The HTML for the Pokemon card
- */
 function generatePokemonDiv(
     currentPokemon,
     cardBackgroundColors,
@@ -88,10 +60,6 @@ function generatePokemonDiv(
   `;
 }
 
-/**
- * Shows the Pokemon details view for the Pokemon at the given index
- * @param {number} pokemonIndex - The index of the Pokemon in the allPokemon array
- */
 function showPokemon(pokemonIndex) {
     if (allPokemon[pokemonIndex]) {
         let currentPokemon = allPokemon[pokemonIndex];
@@ -106,14 +74,6 @@ function showPokemon(pokemonIndex) {
     document.getElementById('loadmore').classList.add('d-none');
 }
 
-/**
- * Updates the Pokemon details view with information about the specified Pokemon.
- * Sets the inner HTML of the details container to display the Pokemon's details.
- * Updates the current Pokemon index and background color based on the Pokemon's type.
- * @param {object} currentPokemon - The Pokemon object containing details to display.
- * @param {string} typesHTML - The HTML representing the Pokemon's types.
- * @param {number} pokemonIndex - The index of the Pokemon in the allPokemon array.
- */
 function detailViewHelp(currentPokemon, typesHTML, pokemonIndex) {
     let detailsContainer = document.getElementById('pokemon-details');
     detailsContainer.innerHTML = showPokemonDiv(currentPokemon, typesHTML);
@@ -122,61 +82,78 @@ function detailViewHelp(currentPokemon, typesHTML, pokemonIndex) {
     detailsContainer.className = `pokemon-details ${cardBackgroundColors}`;
 }
 
-/**
- * Generates the HTML for the Pokemon details view and returns it as a string.
- * @param {object} currentPokemon - The Pokemon object containing details to display.
- * @param {string} typesHTML - The HTML representing the Pokemon's types.
- * @returns {string} The HTML for the Pokemon details view.
- */
 function showPokemonDiv(currentPokemon, typesHTML) {
     return `
+    <div class="navigate">
+        <img class="navigation-image" src="./img/previous1.png" onclick="previousPokemon()"/>
+        <img class="navigation-image" src="./img/cancel1.png" onclick="closePokemon()"/>
+        <img class="navigation-image" src="./img/next1.png" onclick="nextPokemon()"/>
+    </div>
     <div class="Pokename"><h1>${currentPokemon.name}</h1></div>
     <div class="large-types-container">${typesHTML}</div>           
     <img class="pokeball-img-large" src="./img/pokeball.png">
-    <img class="pokemon-img-large" src="${currentPokemon.sprites.other['official-artwork'].front_default}">       
-  `;
+    <img class="pokemon-img-large" src="${currentPokemon.sprites.other['official-artwork'].front_default}">
+
+    
+    <div class="info-container">
+        <div class="tabs">
+            <div class="tab about" id="about-tab" onclick="showAbout()">
+                <h2 class="info-container-names">About</h2>
+            </div>
+            <div class="tab base-stats" id="base-stats-tab" onclick="showBaseStats()">
+                <h2 class="info-container-names">Base Stats</h2>
+            </div>
+            <div class="tab moves" id="moves-tab" onclick="showMoves()">
+                <h2 class="info-container-names">Moves</h2>
+            </div>
+        </div>
+
+        <div class="tab-contents" id="tab-contents">
+            <div id="about-contents" class="tab-content">
+                <p><b>Height:</b> <span id="height"></span></p>
+                <p><b>Weight:</b> <span id="weight"></span></p>
+                <p><b>Abilities:</b></p>
+                <ul id="abilities"></ul>
+            </div>
+
+            <div id="base-contents" class="tab-content d-none">
+                <canvas id="base-stats-chart"></canvas>
+            </div>
+
+            <div id="move-contents" class="tab-content d-none">
+                <ul id="moves-list"></ul>
+            </div>
+        </div>
+    </div>
+    `;
 }
 
-/**
- * Switches the view to display the Pokemon details.
- * Hides the main container and other elements while showing the details container.
- */
 function switchToPokemonDetailsView() {
     handleMainContainer();
     showDetailsContainer();
     hideElements();
 }
 
-/**
- * Hides the main container by adding the 'd-none' class to it.
- */
 function handleMainContainer() {
     document.getElementById('main-container').classList.add('d-none');
 }
 
-/**
- * Shows the Pokemon details container and the details inside it by removing the 'd-none' class.
- */
 function showDetailsContainer() {
     document.getElementById('pokemon-details').classList.remove('d-none');
     document.getElementById('main-detail-container').classList.remove('d-none');
 }
 
-/**
- * Hides elements that are not needed when the details view is displayed.
- * Elements that are hidden include the "Load more" button, the "About" details
- * and the header.
- */
 function hideElements() {
-    document.getElementById('loadmore').classList.add('d-none');
-    document.getElementById('about-contents').classList.add('d-none');
-    document.getElementById('pokemonheader').classList.add('d-none');
+    let loadmore = document.getElementById('loadmore');
+    if (loadmore) loadmore.classList.add('d-none');
+
+    let header = document.getElementById('pokemonheader');
+    if (header) header.classList.add('d-none');
+
+    let about = document.getElementById('about-contents');
+    if (about) about.classList.add('d-none');
 }
 
-/**
- * Populates the "About" details with the Pokemon's height, weight and abilities.
- * @param {object} currentPokemon - The Pokemon object containing the details to display.
- */
 function showAboutInfo(currentPokemon) {
     let heightElement = document.getElementById('height');
     let weightElement = document.getElementById('weight');
@@ -192,13 +169,6 @@ function showAboutInfo(currentPokemon) {
     abilitiesList.innerHTML = abilitiesHTML;
 }
 
-/**
- * Populates the base stats information of a Pokemon in the DOM.
- * Updates the text content of elements with IDs corresponding to
- * each stat (hp, attack, defense, special-attack, special-defense, speed)
- * with the Pokemon's base stat values.
- * @param {object} currentPokemon - The Pokemon object containing base stats to display.
- */
 function showBaseStatsInfo(currentPokemon) {
     let stats = currentPokemon.stats;
     let statNames = [
@@ -217,12 +187,6 @@ function showBaseStatsInfo(currentPokemon) {
     }
 }
 
-/**
- * Populates the moves information of a Pokemon in the DOM.
- * Updates the innerHTML of the element with ID 'moves-list' with
- * the names of the Pokemon's first 5 moves in an unordered list.
- * @param {object} currentPokemon - The Pokemon object containing moves to display.
- */
 function showMovesInfo(currentPokemon) {
     let movesList = document.getElementById('moves-list');
     let movesHTML = '';
@@ -233,12 +197,6 @@ function showMovesInfo(currentPokemon) {
     movesList.innerHTML = movesHTML;
 }
 
-/**
- * Displays the "About" tab with the current Pokemon's details.
- * Clears and deselects other tabs, shows the "About" content, and
- * highlights the "About" tab. Populates the details with the current
- * Pokemon's height, weight, and abilities.
- */
 function showAbout() {
     clearAndDeselectTabs();
     let aboutContents = document.getElementById('about-contents');
@@ -247,12 +205,6 @@ function showAbout() {
     document.getElementById('about-tab').classList.add('selected');
 }
 
-/**
- * Displays the "Base Stats" tab with the current Pokemon's stats.
- * Clears and deselects other tabs, shows the "Base Stats" content, and
- * highlights the "Base Stats" tab. Creates a bar chart in the "Base Stats"
- * tab with the current Pokemon's base stats.
- */
 function showBaseStats() {
     clearAndDeselectTabs();
     let baseContents = document.getElementById('base-contents');
@@ -261,12 +213,6 @@ function showBaseStats() {
     document.getElementById('base-stats-tab').classList.add('selected');
 }
 
-/**
- * Displays the "Moves" tab with the current Pokemon's moves.
- * Clears and deselects other tabs, shows the "Moves" content, and
- * highlights the "Moves" tab. Populates the details with the current
- * Pokemon's first 5 moves in an unordered list.
- */
 function showMoves() {
     clearAndDeselectTabs();
     let moveContents = document.getElementById('move-contents');
@@ -275,11 +221,6 @@ function showMoves() {
     document.getElementById('moves-tab').classList.add('selected');
 }
 
-/**
- * Closes the Pokemon details view and returns to the main list view.
- * Hides the details view container, shows the main container, hides the main
- * detail container, and clears any selected tab in the details view.
- */
 function closePokemon() {
     hideDetailsContainer();
     showMainContainer();
@@ -287,40 +228,20 @@ function closePokemon() {
     clearAndDeselectTabs();
 }
 
-/**
- * Hides the Pokemon details container and shows the "Load more" button.
- * Used when the user closes the Pokemon details view and returns to the main
- * list view.
- */
 function hideDetailsContainer() {
     document.getElementById('pokemon-details').classList.add('d-none');
     document.getElementById('loadmore').classList.remove('d-none');
 }
 
-/**
- * Shows the main container and the header by removing the 'd-none' class
- * from both elements. Used when the user closes the Pokemon details view
- * and returns to the main list view.
- */
 function showMainContainer() {
     document.getElementById('main-container').classList.remove('d-none');
     document.getElementById('pokemonheader').classList.remove('d-none');
 }
 
-/**
- * Hides the main detail container element which contains the Pokemon details
- * view by adding the 'd-none' class to it. Used when the user closes the
- * Pokemon details view and returns to the main list view.
- */
 function hideMainDetailContainer() {
     document.getElementById('main-detail-container').classList.add('d-none');
 }
 
-/**
- * Shows the Pokemon details view for the Pokemon at the next index in the
- * allPokemon array. Increments the currentPokemonIndex and then calls the
- * showPokemon function with the incremented index.
- */
 function nextPokemon() {
     if (currentPokemonIndex < allPokemon.length - 1) {
         navigation();
@@ -328,11 +249,6 @@ function nextPokemon() {
     }
 }
 
-/**
- * Shows the Pokemon details view for the Pokemon at the previous index in the
- * allPokemon array. Decrements the currentPokemonIndex and then calls the
- * showPokemon function with the decremented index.
- */
 function previousPokemon() {
     if (currentPokemonIndex > 0) {
         navigation();
@@ -340,90 +256,45 @@ function previousPokemon() {
     }
 }
 
-/**
- * Handles the navigation between the main list view and the Pokemon details
- * view. First resets the tabs by removing the 'selected' class from each of
- * them, then hides all the tabs by adding the 'd-none' class to the
- * 'tabs' element, and finally shows the Pokemon details view by removing the
- * 'd-none' class from the 'tab-contents' element.
- */
 function navigation() {
     handleTabs();
     hideTabs();
     document.getElementById('tab-contents').classList.remove('d-none');
 }
 
-/**
- * Resets the tabs by removing the 'selected' class from each of them.
- * Called when navigating between the main list view and the Pokemon details
- * view, and when changing the selected Pokemon in the Pokemon details view.
- */
 function handleTabs() {
     document.getElementById('about-tab').classList.remove('selected');
     document.getElementById('base-stats-tab').classList.remove('selected');
     document.getElementById('moves-tab').classList.remove('selected');
 }
 
-/**
- * Hides the contents of all the tabs in the Pokemon details view.
- * Adds the 'd-none' class to the 'about-contents', 'base-contents', and
- * 'move-contents' elements. Used when navigating between the main list view
- * and the Pokemon details view.
- */
 function hideTabs() {
     document.getElementById('about-contents').classList.add('d-none');
     document.getElementById('base-contents').classList.add('d-none');
     document.getElementById('move-contents').classList.add('d-none');
 }
 
-/**
- * Clears and deselects all the tabs in the Pokemon details view.
- * Hides all the content elements of the tabs, removes the 'selected' class
- * from the tab elements, and is used when navigating between the main list
- * view and the Pokemon details view, and when changing the selected Pokemon
- * in the Pokemon details view.
- */
 function clearAndDeselectTabs() {
     handleAboutTab();
     handleBaseStatsTab();
     handleMovesTab();
 }
 
-/**
- * Hides the content of the 'About' tab and deselects the 'About' tab.
- * Called when navigating between the main list view and the Pokemon details
- * view, and when changing the selected Pokemon in the Pokemon details view.
- */
 function handleAboutTab() {
     document.getElementById('about-contents').classList.add('d-none');
     document.getElementById('about-tab').classList.remove('selected');
 }
 
-/**
- * Hides the content of the 'Base Stats' tab and deselects the 'Base Stats' tab.
- * Called when navigating between the main list view and the Pokemon details
- * view, and when changing the selected Pokemon in the Pokemon details view.
- */
 function handleBaseStatsTab() {
     document.getElementById('base-contents').classList.add('d-none');
     document.getElementById('base-stats-tab').classList.remove('selected');
 }
 
-/**
- * Hides the content of the 'Moves' tab and deselects the 'Moves' tab.
- * Called when navigating between the main list view and the Pokemon details
- * view, and when changing the selected Pokemon in the Pokemon details view.
- */
 function handleMovesTab() {
     document.getElementById('move-contents').classList.add('d-none');
     document.getElementById('moves-tab').classList.remove('selected');
 }
 
-/**
- * Creates a bar chart in the 'Base Stats' tab using the current Pokemon's
- * base stats. The chart is created using the Chart.js library.
- * @param {Object} currentPokemon - The current Pokemon object.
- */
 function createBaseStatsChart(currentPokemon) {
     const canvas = document.getElementById('base-stats-chart');
     const ctx = canvas.getContext('2d');
@@ -482,10 +353,6 @@ function createBaseStatsChart(currentPokemon) {
     baseStatsChart = new Chart(ctx, config);
 }
 
-/**
- * Handles searching for a pokemon by name
- * @param {Event} event the DOM event for the search form's submit event
- */
 function filterNames(event) {
     event.preventDefault();
     let input = document.getElementById('search');

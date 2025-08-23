@@ -7,7 +7,7 @@ body {
     margin: 0;
     font-family: 'Roboto', sans-serif;
     overflow-x: hidden !important;
-    background-color: #f1f1f1;    
+    background-color: #f1f1f1;
 }
 
 h1 {
@@ -169,12 +169,12 @@ form {
 
 /* animation */
 @keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* detail view */
@@ -188,19 +188,18 @@ form {
 }
 
 .pokemon-details {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 40px;
     background-color: lightgray;
     max-width: 400px;
-    height: 60vh;
+    height: 850px;
     transition: all 0.4s ease;
     overflow: hidden;
     box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.6);
 }
-
-
 
 .Pokename,
 .large-types-container {
@@ -227,28 +226,28 @@ form {
 }
 
 .pokeball-img-large {
-  opacity: 0.3;
-  display: block;
-  margin: 0 auto; 
-  animation: rotate 25s linear infinite;
-  transform-origin: center center;
-  filter: blur(3px);
+    opacity: 0.3;
+    display: block;
+    margin: 0 auto;
+    animation: rotate 25s linear infinite;
+    transform-origin: center center;
+    filter: blur(3px);
 }
 
 @keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
-.navigation {
+.navigate {
     display: flex;
     justify-content: space-around;
-    gap: 110px;
-    margin-top: -750px;
+    width: 100%;
+    margin-top: 10px;
 }
 
 .navigation-image {
@@ -269,14 +268,20 @@ form {
 }
 
 .info-container {
+    position: fixed;
+    margin-top: 530px;
     background-color: white;
     border-radius: 40px;
     width: 400px;
     height: 320px;
-    margin-top: 381px;
     z-index: 1;
-    background: radial-gradient(circle at 50% 50%, white 10%, rgb(235, 235, 235) 40%, rgb(193, 193, 193) 100%);
-    box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.2); 
+    background: radial-gradient(
+        circle at 50% 50%,
+        white 10%,
+        rgb(235, 235, 235) 40%,
+        rgb(193, 193, 193) 100%
+    );
+    box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.2);
 }
 
 .info-container-names {
