@@ -141,8 +141,8 @@ function showPokemonDiv(currentPokemon, typesHTML) {
 
         <div class="tab-contents" id="tab-contents">
             <div id="about-contents" class="tab-content">
-                <p><b>Height:</b> <span id="height"></span></p>
-                <p><b>Weight:</b> <span id="weight"></span></p>
+                <p><b>Height:</b> <span id="height" style="margin-left:5px;"></span></p>
+                <p><b>Weight:</b> <span id="weight" style="margin-left:5px;"></span></p>
                 <p><b>Abilities:</b></p>
                 <ul id="abilities"></ul>
             </div>
