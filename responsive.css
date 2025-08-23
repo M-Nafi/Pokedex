@@ -1,88 +1,88 @@
 /* responsive */
 @media (max-width: 1024px) {
-  header {
-    flex-direction: column;  
-  }
+    header {
+        flex-direction: column;
+    }
 
-  .headerimg {
-    width: 200px;
-  }
+    .headerimg {
+        width: 200px;
+    }
 }
 
 @media (max-width: 430px) {
-  .pokemon-details {
-    width: 350px;
-    height: 600px;
-  }
+    .pokemon-details {
+        width: 350px;
+        height: 600px;
+    }
 
-  .navigate img {
-    width: 35px;
-    height: 35px;
-    z-index: 1;
-  }
+    .navigate img {
+        width: 35px;
+        height: 35px;
+        z-index: 1;
+    }
 
-  .Pokename {
-    top: 20px;
-    z-index: 1;
-    width: 100%;
-    padding-left: 16px;
-  }
+    .Pokename {
+        top: 20px;
+        z-index: 1;
+        width: 100%;
+        padding-left: 16px;
+    }
 
-  .large-types-container {
-    top: 20px;
-    z-index: 1;
-    width: 100%;
-    padding-left: 16px;
-  }
+    .large-types-container {
+        top: 20px;
+        z-index: 1;
+        width: 100%;
+        padding-left: 16px;
+    }
 
-  .pokeball-img-large {
-    position: relative;
-    top: -130px;
-  }
+    .pokeball-img-large {
+        position: relative;
+        top: -130px;
+    }
 
-  .pokemon-img-large {
-    width: 225px;
-    height: 225px;
-    top: -480px;
-  }
+    .pokemon-img-large {
+        width: 225px;
+        height: 225px;
+        top: -480px;
+    }
 
-  h1 {
-    margin-bottom: 10px;
-  }
+    h1 {
+        margin-bottom: 10px;
+    }
 
-  h2 {
-    font-size: 20px;
-    z-index: 1;
-  }
+    h2 {
+        font-size: 20px;
+        z-index: 1;
+    }
 
-  .info-container {
-    height: 208px;
-    width: 350px;
-    margin-top: 392px;
-  }
+    .info-container {
+        height: 208px;
+        width: 350px;
+        margin-top: 392px;
+    }
 
-  .tabs {
-    padding-top: 0;
-    height: 40px;
-    z-index: 1;
-  }
+    .tabs {
+        padding-top: 0;
+        height: 40px;
+        z-index: 1;
+    }
 
-  .tab {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-  }
+    .tab {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+    }
 
-  .tab.selected {
-    height: 30px;
-}
+    .tab.selected {
+        height: 30px;
+    }
 
-  p {
-    font-size: 12px;
-  }
+    p {
+        font-size: 12px;
+    }
 
-  ul {
-    font-size: 12px;
-  }
+    ul {
+        font-size: 12px;
+    }
 }
