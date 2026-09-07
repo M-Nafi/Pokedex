@@ -41,9 +41,9 @@
     }
 
     .pokemon-img-large {
-        width: 225px;
-        height: 225px;
-        top: -480px;
+        width: 200px;
+        height: 200px;
+        top: 33%;
     }
 
     h1 {
