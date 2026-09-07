@@ -18,7 +18,7 @@ async function loadPokemon(data) {
     let index = allPokemon.length - 1;
     let typesHTML = '';
     pokemon.types.forEach((type) => {
-        typesHTML += `<button class="type-button">${type.type.name}</button>`;
+        typesHTML += `<button class="type-button glass-effect">${type.type.name}</button>`;
     });
     cardBackgroundColors = pokemon.types[0].type.name + '-type';
     generateMainContainer(pokemon, index, typesHTML);
@@ -89,7 +89,7 @@ function showPokemon(pokemonIndex) {
         let currentPokemon = allPokemon[pokemonIndex];
         let typesHTML = '';
         currentPokemon.types.forEach((type) => {
-            typesHTML += `<button class="type-button">${type.type.name}</button>`;
+            typesHTML += `<button class="type-button glass-effect shadow">${type.type.name}</button>`;
         });
         switchToPokemonDetailsView();
         detailViewHelp(currentPokemon, typesHTML, pokemonIndex);
@@ -116,17 +116,34 @@ function detailViewHelp(currentPokemon, typesHTML, pokemonIndex) {
 function showPokemonDiv(currentPokemon, typesHTML) {
     return `
     <div class="navigate">
-        <img class="navigation-image" src="./img/previous1.png" onclick="previousPokemon()"/>
-        <img class="navigation-image" src="./img/cancel1.png" onclick="closePokemon()"/>
-        <img class="navigation-image" src="./img/next1.png" onclick="nextPokemon()"/>
+        <button class="glass-btn glass-effect shadow" onclick="previousPokemon()" aria-label="Vorheriges Pokemon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+
+        <button class="glass-btn glass-effect shadow" onclick="closePokemon()" aria-label="Schließen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+
+        <button class="glass-btn glass-effect shadow" onclick="nextPokemon()" aria-label="Nächstes Pokemon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
     </div>
-    <div class="Pokename"><h1>${currentPokemon.name}</h1></div>
-    <div class="large-types-container">${typesHTML}</div>           
+
+    <div class="large-types-container">${typesHTML}</div> 
+    <div class="Pokename">
+        <h1 class="text-shadow">${currentPokemon.name}</h1>
+    </div>          
     <img class="pokeball-img-large" src="./img/pokeball.png">
     <img class="pokemon-img-large" src="${currentPokemon.sprites.other['official-artwork'].front_default}">
 
-    
-    <div class="info-container">
+    <div class="info-container glass-effect">
         <div class="tabs">
             <div class="tab about" id="about-tab" onclick="showAbout()">
                 <h2 class="info-container-names">About</h2>

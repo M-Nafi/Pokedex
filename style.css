@@ -25,6 +25,7 @@ body {
 }
 
 h1 {
+    margin-top: 16px;
     color: white;
 }
 
@@ -211,20 +212,20 @@ header {
     flex-direction: column;
     align-items: center;
     border-radius: 40px;
-    background-color: lightgray;
     max-width: 400px;
-    height: 850px;
+    height: 90%;
     transition: all 0.4s ease;
     overflow: hidden;
-    box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 
+        0 2px 5px rgba(0, 0, 0, 0.1),
+        0 10px 20px rgba(0, 0, 0, 0.15),
+        0 25px 45px rgba(0, 0, 0, 0.2);
 }
 
 .Pokename,
 .large-types-container {
-    text-shadow: 3px 5px 12px rgba(0, 0, 0, 0.6);
     position: relative;
-    padding-left: 100px;
-    width: 470px;
     z-index: 1;
 }
 
@@ -232,19 +233,19 @@ header {
     z-index: 1;
 }
 
-.Pokename {
-    top: 80px;
-}
-
 .large-types-container {
-    top: 70px;
+    display: flex;
+    gap: 8px;
+    padding-top: 8px;
+    width: 100%;
+    justify-content: center;
 }
 
 .pokemon-img-large {
-    position: relative !important;
+    position: absolute;
     width: 275px;
     height: 275px;
-    top: -415px;
+    top: 25%;
     z-index: 999;
 }
 
@@ -268,21 +269,32 @@ header {
 
 .navigate {
     display: flex;
-    justify-content: space-around;
     width: 100%;
-    margin-top: 10px;
+    padding: 8px 0;
+    justify-content: space-around;
 }
 
-.navigation-image {
-    width: 50px;
-    height: 50px;
+.glass-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.6);
-    border-radius: 50px;
+    outline: none;
+    transition: all 0.2s ease;
 }
 
-.navigation-image:hover {
-    scale: 1.1;
+.glass-btn svg {
+    width: 22px;
+    height: 22px;
+    stroke: #ffffff;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.glass-btn:hover {
+    background: rgba(255, 255, 255, 0.22);
 }
 
 .card-name {
@@ -291,20 +303,11 @@ header {
 }
 
 .info-container {
-    position: fixed;
-    margin-top: 530px;
-    background-color: white;
-    border-radius: 40px;
+    position: absolute;
+    bottom: 0;
     width: 400px;
-    height: 320px;
+    border-radius: 40px;
     z-index: 1;
-    background: radial-gradient(
-        circle at 50% 50%,
-        white 10%,
-        rgb(235, 235, 235) 40%,
-        rgb(193, 193, 193) 100%
-    );
-    box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.2);
 }
 
 .info-container-names {
@@ -404,4 +407,25 @@ li {
 }
 ::-webkit-scrollbar-thumb:hover {
     background: rgb(117, 138, 170);
+}
+
+.glass-effect {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+.shadow {
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.02),
+        0 10px 20px rgba(0, 0, 0, 0.06),
+        0 25px 45px rgba(0, 0, 0, 0.1);
+}
+
+.text-shadow {
+    text-shadow: 
+        0 1px 2px rgba(0, 0, 0, 0.15),
+        0 3px 8px rgba(0, 0, 0, 0.1);
 }
