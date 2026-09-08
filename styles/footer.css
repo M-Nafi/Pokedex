@@ -1,0 +1,63 @@
+:root {
+  --pokedex-red: #e3350d;
+  --pokedex-dark-red: #b32100;
+}
+
+.pokedex-footer {
+    width: 100%;
+    background-color: var(--pokedex-dark-red);
+    color: #ffffff;
+    padding: 30px 20px;
+    text-align: center;
+    border-top: 4px solid var(--pokedex-red);
+    margin-top: auto; /* Sorgt bei Flexbox-Layouts dafür, dass der Footer unten bleibt */
+    font-family: sans-serif;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.footer-content {
+    max-width: 1024px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.footer-links {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 0.95rem;
+}
+
+.footer-links a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease-in-out;
+}
+
+.footer-links a:hover {
+    color: #ffcc00; /* Pokémon-Gelb für den Hover-Effekt */
+    text-decoration: underline;
+}
+
+.footer-links .divider {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.disclaimer {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    max-width: 600px;
+}
+
+.copyright {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+}

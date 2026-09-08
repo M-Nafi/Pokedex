@@ -1,0 +1,423 @@
+/* ==========================================================================
+   1. VARIABLES & BASE STYLES
+   ========================================================================== */
+:root {
+    --pokedex-red: #e3350d;
+    --pokedex-dark-red: #b32100;
+    --blue-light: #28aafd;
+}
+
+html,
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    overflow-x: hidden !important;
+    background-color: #f1f1f1;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.content-wrapper {
+    flex: 1;
+    min-height: auto;
+    max-width: 1024px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    margin-top: 16px;
+    color: white;
+}
+
+h1::first-letter {
+    text-transform: capitalize;
+}
+
+p,
+li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(253, 236, 166);
+    border-radius: 16px;
+    padding: 3px 10px;
+    text-transform: capitalize;
+    margin-bottom: 10px;
+    box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.6);
+}
+
+/* ==========================================================================
+   2. MAIN CONTAINER & CARDS (HAUPTANSICHT)
+   ========================================================================== */
+.main-container {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 20px;
+    margin: 16px;
+    gap: 32px;
+}
+
+.pokemon-card {
+    position: relative;
+    display: flex;
+    flex-direction: column; /* Von column-reverse auf column geändert */
+    justify-content: space-between; /* Verteilt Name/Types oben und Bild unten */
+    align-items: center;
+    border-radius: 40px;
+    width: 250px;
+    height: 300px;
+    padding: 20px 10px 10px 10px; /* Innenabstand oben sorgt dafür, dass nichts am Rand klebt */
+    cursor: pointer;
+    box-sizing: border-box;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+.pokemon-card:hover {
+    transform: translateY(-5px) scale(0.99);
+    box-shadow: 
+        0 4px 10px rgba(0, 0, 0, 0.08),
+        0 12px 25px rgba(0, 0, 0, 0.12);
+}
+
+.pokemon-card:hover .type-button {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.12),
+        0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.pokemon-card:hover h1 {
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.pokemon-card:hover .pokeball {
+    filter: blur(0px);
+    opacity: 0.6;
+}
+
+.card-name {
+    margin: 0;
+    font-size: 1.5rem;
+    z-index: 1;
+}
+
+.headerimg {
+    width: 250px;
+}
+
+.pokemon-img {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    margin-bottom: 0;
+    z-index: 1;
+}
+
+.pokeball {
+    position: absolute;
+    width: 270px;
+    height: 270px;
+    opacity: 0.4;
+    animation: rotate 25s linear infinite;
+    transform-origin: center center;
+    filter: blur(5px);
+    transition: filter 0.4s ease, opacity 0.4s ease;
+}
+
+/* ==========================================================================
+   3. TYPES & BUTTONS
+   ========================================================================== */
+.types-container {
+    z-index: 1;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.type-button {
+    color: whitesmoke;
+    font-size: 16px;
+    min-width: 80px;
+    height: 35px;
+    border-radius: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    text-transform: capitalize;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.05),
+        0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.searching,
+.searching1,
+.loadmorePokemon {
+    background-color: lightgray;
+    color: rgb(53, 106, 188);
+    font-weight: 700;
+    border: 2px solid rgb(53, 106, 188);
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+.searching {
+    font-size: 16px;
+    height: 32px;
+    padding: 0 12px;
+}
+
+.searching:focus {
+    outline: none;
+}
+
+.searching::placeholder {
+    color: rgba(0, 0, 0, 0.3);
+}
+
+.searching1 {
+    font-size: 16px;
+    width: 42px;
+    height: 37px;
+}
+
+.searching:hover,
+.searching1:hover {
+    background-color: rgb(230, 230, 230);
+}
+
+.loadmorePokemon {
+    font-size: 20px;
+    width: 300px;
+    height: 50px;
+    padding: 5px 10px;
+    margin-bottom: 16px;
+}
+
+.loadmorePokemon:hover {
+    background-color: rgb(255, 244, 199);
+}
+
+/* ==========================================================================
+   4. DETAIL VIEW (EINZELANSICHT)
+   ========================================================================== */
+.main-detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.pokemon-details {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 40px;
+    max-width: 400px;
+    height: 90%;
+    transition: all 0.4s ease;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 
+        0 2px 5px rgba(0, 0, 0, 0.1),
+        0 10px 20px rgba(0, 0, 0, 0.15),
+        0 25px 45px rgba(0, 0, 0, 0.2);
+}
+
+.Pokename,
+.large-types-container {
+    position: relative;
+    z-index: 1;
+}
+
+.large-types-container {
+    display: flex;
+    gap: 8px;
+    padding-top: 8px;
+    width: 100%;
+    justify-content: center;
+}
+
+.pokemon-img-large {
+    position: absolute;
+    width: 275px;
+    height: 275px;
+    top: 25%;
+    z-index: 999;
+}
+
+.pokeball-img-large {
+    opacity: 0.4;
+    display: block;
+    margin: 0 auto;
+    animation: rotate 25s linear infinite;
+    transform-origin: center center;
+    filter: blur(3px);
+}
+
+.navigate {
+    display: flex;
+    width: 100%;
+    padding: 8px 0;
+    justify-content: space-around;
+}
+
+.glass-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.glass-btn svg {
+    width: 22px;
+    height: 22px;
+    stroke: #ffffff;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.glass-btn:hover {
+    background: rgba(255, 255, 255, 0.22);
+}
+
+.info-container {
+    position: absolute;
+    bottom: 0;
+    width: 400px;
+    border-radius: 40px;
+    z-index: 1;
+}
+
+.info-container-names {
+    cursor: pointer;
+}
+
+.poke-contents {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 20px;
+    align-items: center;
+    color: rgb(53, 106, 188);
+    height: 53px;
+}
+
+.tab {
+    cursor: pointer;
+}
+
+.tab:hover {
+    color: rgb(253, 236, 166);
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
+}
+
+.tab.selected {
+    background-color: rgb(53, 106, 188);
+    color: white;
+    border-radius: 16px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 7px;
+}
+
+.tab-contents {
+    display: flex;
+    justify-content: space-around;
+}
+
+.tab-content {
+    color: rgb(53, 106, 188);
+    font-weight: 700;
+    width: 300px;
+}
+
+.tab-content ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+/* ==========================================================================
+   5. GLASSMORPHISM & SHADOW UTILITIES
+   ========================================================================== */
+.glass-effect {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
+}
+
+.shadow {
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.02),
+        0 10px 20px rgba(0, 0, 0, 0.06),
+        0 25px 45px rgba(0, 0, 0, 0.1);
+}
+
+.text-shadow {
+    text-shadow: 
+        0 1px 2px rgba(0, 0, 0, 0.15),
+        0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.d-none {
+    display: none !important;
+}
+
+/* ==========================================================================
+   6. ANIMATIONS & SCROLLBAR
+   ========================================================================== */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px rgb(53, 106, 188);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: gray;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(117, 138, 170);
+}
