@@ -4,38 +4,105 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" type="image/png" href="./img/pokeballfavicon.png" />
-        <script src="script.js"></script>
+
+        <script src="scripts/script.js"></script>
+        <script src="scripts/templates.js"></script>
+        <script src="scripts/render.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <link rel="stylesheet" href="style.css" />
-        <link rel="stylesheet" href="responsive.css" />
-        <link rel="stylesheet" href="colors.css" />
-        <!--sweet alert function-->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+        <link rel="stylesheet" href="styles/style.css" />
+        <link rel="stylesheet" href="styles/header.css" />
+        <link rel="stylesheet" href="styles/footer.css" />
+        <link rel="stylesheet" href="styles/responsive.css" />
+        <link rel="stylesheet" href="styles/colors.css" />
 
         <title>Pokedex</title>
     </head>
 
     <body onload="loadPokemons()">
+        <header class="pokedex-header">
+            <div class="pokedex-top-bar">
+                <div class="lights-container">
+                    <div class="big-light"></div>
+                    <div class="small-lights">
+                        <span class="light red"></span>
+                        <span class="light yellow"></span>
+                        <span class="light green"></span>
+                    </div>
+                </div>
+            </div>
+                
+            <div class="pokedex-nav-bar">
+    <div class="logo">
+        <h1>PokéApp</h1>
+    </div>
+    
+    <div class="search-box">
+        <input type="text" id="pokemon-search" placeholder="Name eingeben..." />
+        <button id="search-btn">🔍</button>
+    </div>
+
+    <div class="type-filter-box">
+        <select id="type-select" onchange="filterBySelectedType()">
+            <option value="all">Alle Typen</option>
+            <option value="fire">Feuer</option>
+            <option value="water">Wasser</option>
+            <option value="grass">Pflanze</option>
+            <option value="electric">Elektro</option>
+            <option value="ice">Eis</option>
+            <option value="fighting">Kampf</option>
+            <option value="poison">Gift</option>
+            <option value="ground">Boden</option>
+            <option value="flying">Flug</option>
+            <option value="psychic">Psycho</option>
+            <option value="bug">Käfer</option>
+            <option value="rock">Gestein</option>
+            <option value="ghost">Geist</option>
+            <option value="dragon">Drache</option>
+            <option value="steel">Stahl</option>
+            <option value="fairy">Fee</option>
+        </select>
+    </div>
+
+    <nav class="nav-links">
+        <a href="#" onclick="resetFilter()">Home</a>
+    </nav>
+</div>
+
+        </header>
+
         <div class="content-wrapper">
-            <header id="pokemonheader">
-                <div>
-                    <img class="headerimg" src="./img/pokedex.png" />
-                </div>
-                <div>
-                    <input class="searching" type="text" id="search" placeholder=" ...search for Pokemon" oninput="filterNames()"/>
-                    <button class="searching1" onclick="filterNames(event)">Go!</button>
-                </div>
-            </header>
 
             <div class="main-container" id="main-container"></div>
 
             <div id="loadmore" class="lomopo">
-                <img class="loadmorePokemon" src="./img/loadmorepokemon.png" onclick="loadMore()"/>
+                <img class="loadmorePokemon" src="./assets/img/loadmorepokemon.png" onclick="loadMore()"/>
             </div>
 
             <div class="main-detail-container d-none" id="main-detail-container">
                 <div class="pokemon-details d-none" id="pokemon-details"></div>
             </div>
         </div>
+
+        <footer class="pokedex-footer">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="https://pokeapi.co/" target="_blank" rel="noopener noreferrer">PokéAPI</a>
+                    <span class="divider">|</span>
+                    <a href="#">Impressum</a>
+                    <span class="divider">|</span>
+                    <a href="#">Datenschutz</a>
+                </div>
+                
+                <span class="disclaimer">
+                    Pokémon and Pokémon character names are trademarks of Nintendo.<br />
+                    Data provided by PokéAPI. This is an educational non-commercial portfolio project.
+                </span>
+
+                <span class="copyright">&copy; 2024 PokéApp. Alle Rechte vorbehalten.</span>
+            </div>
+        </footer>
+
     </body>
 </html>
