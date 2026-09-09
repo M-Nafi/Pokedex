@@ -1,0 +1,148 @@
+.main-detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.pokemon-details {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 40px;
+    max-width: 400px;
+    height: 90%;
+    transition: all 0.4s ease;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 
+        0 2px 5px rgba(0, 0, 0, 0.1),
+        0 10px 20px rgba(0, 0, 0, 0.15),
+        0 25px 45px rgba(0, 0, 0, 0.2);
+}
+
+.Pokename,
+.large-types-container {
+    position: relative;
+    z-index: 1;
+}
+
+.large-types-container {
+    display: flex;
+    gap: 8px;
+    padding-top: 8px;
+    width: 100%;
+    justify-content: center;
+}
+
+.pokemon-img-large {
+    position: absolute;
+    width: 275px;
+    height: 275px;
+    top: 25%;
+    z-index: 999;
+}
+
+.pokeball-img-large {
+    opacity: 0.4;
+    display: block;
+    margin: 0 auto;
+    animation: rotate 25s linear infinite;
+    transform-origin: center center;
+    filter: blur(3px);
+}
+
+.navigate {
+    display: flex;
+    width: 100%;
+    padding: 8px 0;
+    justify-content: space-around;
+}
+
+.glass-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.glass-btn svg {
+    width: 22px;
+    height: 22px;
+    stroke: #ffffff;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.glass-btn:hover {
+    background: rgba(255, 255, 255, 0.22);
+}
+
+.info-container {
+    position: absolute;
+    bottom: 0;
+    width: 400px;
+    border-radius: 40px;
+    z-index: 1;
+}
+
+.info-container-names {
+    cursor: pointer;
+}
+
+.poke-contents {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 20px;
+    align-items: center;
+    color: rgb(53, 106, 188);
+    height: 53px;
+}
+
+.tab {
+    cursor: pointer;
+}
+
+.tab:hover {
+    color: rgb(253, 236, 166);
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
+}
+
+.tab.selected {
+    background-color: rgb(53, 106, 188);
+    color: white;
+    border-radius: 16px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 7px;
+}
+
+.tab-contents {
+    display: flex;
+    justify-content: space-around;
+}
+
+.tab-content {
+    color: rgb(53, 106, 188);
+    font-weight: 700;
+    width: 300px;
+}
+
+.tab-content ul {
+    list-style: none;
+    padding-left: 0;
+}
