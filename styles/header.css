@@ -9,7 +9,6 @@
     flex-direction: column;
 }
 
-/* Obere Leiste mit den Lichtern */
 .pokedex-top-bar {
     max-width: 1024px;
     width: 100%;
@@ -47,11 +46,18 @@
     border: 1px solid rgba(0,0,0,0.3);
 }
 
-.light.red { background-color: #ff3b30; }
-.light.yellow { background-color: #ffcc00; }
-.light.green { background-color: #34c759; }
+.light.red {
+    background-color: #ff3b30;
+}
 
-/* Untere Leiste mit Navigation und Suche */
+.light.yellow { 
+    background-color: #ffcc00;
+}
+
+.light.green {
+    background-color: #34c759;
+}
+
 .pokedex-nav-bar {
     max-width: 1024px;
     width: 100%;
@@ -64,7 +70,6 @@
     box-sizing: border-box;
 }
 
-/* Logo - Auf eine ausgewogene Größe angepasst */
 .logo h1 {
     margin: 0;
     font-size: 1.6rem;
@@ -72,7 +77,6 @@
     letter-spacing: 1px;
 }
 
-/* Gemeinsames Layout für Suchfeld und Typen-Filter */
 .search-box, 
 .type-filter-box select {
     height: 40px;
@@ -82,7 +86,6 @@
     box-sizing: border-box;
 }
 
-/* Suchfeld Eingabebereich */
 .search-box {
     display: flex;
     align-items: center;
@@ -111,7 +114,6 @@
     align-items: center;
 }
 
-/* Typen-Filter Dropdown */
 .type-filter-box select {
     padding: 0 15px;
     border: none;
@@ -127,7 +129,6 @@
     background-color: #f0f0f0;
 }
 
-/* Navigation Links - Schriftgröße leicht angehoben für bessere Symmetrie zum Logo */
 .nav-links a {
     color: white;
     text-decoration: none;
@@ -140,4 +141,43 @@
 .nav-links a:hover {
     text-decoration: underline;
     opacity: 0.9;
+}
+
+.headerimg {
+    width: 250px;
+}
+
+.searching,
+.searching1 {
+    background-color: lightgray;
+    color: rgb(53, 106, 188);
+    font-weight: 700;
+    border: 2px solid rgb(53, 106, 188);
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+.searching {
+    font-size: 16px;
+    height: 32px;
+    padding: 0 12px;
+}
+
+.searching:focus {
+    outline: none;
+}
+
+.searching::placeholder {
+    color: rgba(0, 0, 0, 0.3);
+}
+
+.searching1 {
+    font-size: 16px;
+    width: 42px;
+    height: 37px;
+}
+
+.searching:hover,
+.searching1:hover {
+    background-color: rgb(230, 230, 230);
 }
