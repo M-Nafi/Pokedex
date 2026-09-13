@@ -63,13 +63,10 @@ function showPokemon(pokemonIndex) {
     detailsContainer.innerHTML = showPokemonDiv(currentPokemon, typesHTML);
     detailsContainer.className = `pokemon-details ${currentPokemon.types[0].type.name}-type`;
 
-    // Ansicht umschalten
     document.getElementById('main-container').classList.add('d-none');
     document.getElementById('loadmore').classList.add('d-none');
     document.getElementById('main-detail-container').classList.remove('d-none');
     detailsContainer.classList.remove('d-none');
-
-    // Standardmäßig "About" Tab befüllen
     showAbout();
 }
 
@@ -79,8 +76,6 @@ function showPokemon(pokemonIndex) {
 function closePokemon() {
     document.getElementById('pokemon-details').classList.add('d-none');
     document.getElementById('main-detail-container').classList.add('d-none');
-    
-    // Hauptinhalte wieder anzeigen
     document.getElementById('main-container').classList.remove('d-none');
     document.getElementById('loadmore').classList.remove('d-none');
     
@@ -160,20 +155,33 @@ function createBaseStatsChart(currentPokemon) {
     const baseStats = currentPokemon.stats.map(s => s.base_stat);
 
     baseStatsChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'radar',
         data: {
             labels: labels,
             datasets: [{
                 label: 'Base Stats',
                 data: baseStats,
-                backgroundColor: ['rgb(253, 236, 166)'],
-                borderColor: ['rgb(53, 106, 188)'],
+                backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                borderColor: 'rgba(255, 255, 255, 0.8)',
                 borderWidth: 2
             }]
         },
         options: {
-            scales: { y: { beginAtZero: true, max: 200 } },
-            plugins: { legend: { display: false } }
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                r: {
+                    beginAtZero: true,
+                    max: 180,
+                    ticks: { display: false },
+                    grid: { color: 'rgba(255, 255, 255, 0.2)' },
+                    angleLines: { color: 'rgba(255, 255, 255, 0.2)' },
+                    pointLabels: { color: 'white', font: { size: 11 } }
+                }
+            },
+            plugins: {
+                legend: { display: false }
+            }
         }
     });
 }
@@ -187,7 +195,6 @@ function filterBySelectedType() {
     let foundCount = 0;
 
     for (let i = 0; i < cards.length; i++) {
-        // Prüft, ob die Karte die CSS-Klasse des gewählten Typs besitzt (z.B. "fire-type")
         if (selectedType === 'all' || cards[i].classList.contains(`${selectedType}-type`)) {
             cards[i].style.display = '';
             foundCount++;
@@ -196,7 +203,6 @@ function filterBySelectedType() {
         }
     }
 
-    // Falls bei den aktuell geladenen Pokémon kein Treffer dabei ist
     if (foundCount === 0 && selectedType !== 'all' && typeof Swal !== 'undefined') {
         Swal.fire({
             icon: 'info',
