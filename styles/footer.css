@@ -10,7 +10,7 @@
     padding: 30px 20px;
     text-align: center;
     border-top: 4px solid var(--pokedex-red);
-    margin-top: auto; /* Sorgt bei Flexbox-Layouts dafür, dass der Footer unten bleibt */
+    margin-top: auto;
     font-family: sans-serif;
     box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
 }
@@ -40,7 +40,7 @@
 }
 
 .footer-links a:hover {
-    color: #ffcc00; /* Pokémon-Gelb für den Hover-Effekt */
+    color: #ffcc00;
     text-decoration: underline;
 }
 
