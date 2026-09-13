@@ -12,9 +12,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
     border-radius: 40px;
-    max-width: 400px;
-    height: 90%;
+    width: 380px;
+    height: 680px;
+    padding-top: 16px;
+    box-sizing: border-box;
     transition: all 0.4s ease;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.4);
@@ -27,7 +30,7 @@
 .Pokename,
 .large-types-container {
     position: relative;
-    z-index: 1;
+    z-index: 2;
 }
 
 .large-types-container {
@@ -39,20 +42,28 @@
 }
 
 .pokemon-img-large {
-    position: absolute;
-    width: 275px;
-    height: 275px;
-    top: 25%;
-    z-index: 999;
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 8px 0;
+    z-index: 2;
+    object-fit: contain;
+    pointer-events: none;
 }
 
 .pokeball-img-large {
-    opacity: 0.4;
+    position: absolute;
+    top: 60px;
+    width: 260px;
+    height: 260px;
+    opacity: 0.3;
+    z-index: 1;
     display: block;
     margin: 0 auto;
     animation: rotate 25s linear infinite;
     transform-origin: center center;
     filter: blur(3px);
+    pointer-events: none;
 }
 
 .navigate {
@@ -60,6 +71,7 @@
     width: 100%;
     padding: 8px 0;
     justify-content: space-around;
+    z-index: 2;
 }
 
 .glass-btn {
@@ -86,11 +98,19 @@
 }
 
 .info-container {
-    position: absolute;
-    bottom: 0;
-    width: 400px;
-    border-radius: 40px;
-    z-index: 1;
+    position: relative;
+    width: 100%;
+    height: 340px;
+    border-radius: 40px 40px 0 0;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
 }
 
 .info-container-names {
@@ -101,48 +121,98 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100%;
 }
 
 .tabs {
+    position: relative;
+    z-index: 30;
     display: flex;
     justify-content: space-evenly;
-    padding-top: 20px;
     align-items: center;
-    color: rgb(53, 106, 188);
-    height: 53px;
+    color: white;
+    width: 100%;
+    height: 50px;
+    margin-top: 10px;
 }
 
 .tab {
     cursor: pointer;
-}
-
-.tab:hover {
-    color: rgb(253, 236, 166);
-    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
-}
-
-.tab.selected {
-    background-color: rgb(53, 106, 188);
-    color: white;
-    border-radius: 16px;
-    height: 40px;
+    padding: 0 12px;
+    height: 36px;
     display: flex;
     align-items: center;
-    padding: 0 7px;
+    color: rgba(255, 255, 255, 0.7);
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+.tab.selected,
+.tab:hover {
+    color: #ffffff;
+    font-weight: bold;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
 }
 
 .tab-contents {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    width: 100%;
+    flex: 1;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    overflow: hidden !important;
 }
 
 .tab-content {
-    color: rgb(53, 106, 188);
+    color: white;
     font-weight: 700;
-    width: 300px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
 }
 
 .tab-content ul {
     list-style: none;
     padding-left: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px; 
+}
+
+.tab-content ul li,
+.tab-content li *,
+.tab-content div,
+.tab-content p {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    padding: 2px 0 !important;
+    font-size: 0.85rem;
+    text-align: center;
+    width: 100%;
+}
+
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 220px;
 }
