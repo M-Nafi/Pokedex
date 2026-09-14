@@ -21,6 +21,10 @@ body {
     min-height: 100vh;
 }
 
+.d-none {
+    display: none !important;
+}
+
 .content-wrapper {
     flex: 1;
     min-height: auto;
