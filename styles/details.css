@@ -12,10 +12,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
     border-radius: 40px;
     width: 380px;
-    height: 680px;
+    height: auto;
     padding-top: 16px;
     box-sizing: border-box;
     transition: all 0.4s ease;
@@ -31,6 +30,7 @@
 .large-types-container {
     position: relative;
     z-index: 2;
+    flex-shrink: 0;
 }
 
 .large-types-container {
@@ -43,12 +43,13 @@
 
 .pokemon-img-large {
     position: relative;
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 180px;
     margin: 8px 0;
     z-index: 2;
     object-fit: contain;
     pointer-events: none;
+    flex-shrink: 1;
 }
 
 .pokeball-img-large {
@@ -72,6 +73,7 @@
     padding: 8px 0;
     justify-content: space-around;
     z-index: 2;
+    flex-shrink: 0;
 }
 
 .glass-btn {
@@ -99,8 +101,10 @@
 
 .info-container {
     position: relative;
+    margin-top: auto;
     width: 100%;
     height: 340px;
+    flex-shrink: 0;
     border-radius: 40px 40px 0 0;
     z-index: 20;
     display: flex;
@@ -134,6 +138,7 @@
     width: 100%;
     height: 50px;
     margin-top: 10px;
+    flex-shrink: 0;
 }
 
 .tab {
@@ -167,7 +172,7 @@
     flex: 1;
     padding: 10px 20px;
     box-sizing: border-box;
-    overflow: hidden !important;
+    overflow-y: auto !important;
 }
 
 .tab-content {
@@ -209,7 +214,6 @@
     text-align: center;
     width: 100%;
 }
-
 
 .chart-container {
     position: relative;
