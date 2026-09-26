@@ -1,6 +1,3 @@
-/**
- * Generiert die HTML-Karte für ein einzelnes Pokémon in der Hauptansicht.
- */
 function generatePokemonDiv(currentPokemon, index, typesHTML) {
     const firstType = currentPokemon.types[0].type.name;
     return `
@@ -13,9 +10,6 @@ function generatePokemonDiv(currentPokemon, index, typesHTML) {
   `;
 }
 
-/**
- * Generiert das HTML für das Modal / die Detailansicht.
- */
 function showPokemonDiv(currentPokemon, typesHTML) {
     return `
     <div class="navigate">
