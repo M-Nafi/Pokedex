@@ -1,6 +1,23 @@
-/**
- * Event-Listener für die Suchleiste im Header einrichten.
- */
+const TYPE_COLORS = {
+    grass: 'rgba(120, 200, 80, 0.85)',
+    poison: 'rgba(160, 64, 160, 0.85)',
+    fire: 'rgba(240, 128, 48, 0.85)',
+    water: 'rgba(104, 144, 240, 0.85)',
+    electric: 'rgba(248, 208, 48, 0.85)',
+    flying: 'rgba(168, 144, 240, 0.85)',
+    bug: 'rgba(168, 184, 32, 0.85)',
+    normal: 'rgba(168, 168, 120, 0.85)',
+    ground: 'rgba(224, 192, 104, 0.85)',
+    fairy: 'rgba(238, 153, 172, 0.85)',
+    fighting: 'rgba(192, 48, 40, 0.85)',
+    psychic: 'rgba(248, 88, 136, 0.85)',
+    rock: 'rgba(184, 160, 56, 0.85)',
+    steel: 'rgba(184, 184, 208, 0.85)',
+    ice: 'rgba(152, 216, 216, 0.85)',
+    ghost: 'rgba(112, 88, 152, 0.85)',
+    dragon: 'rgba(112, 56, 248, 0.85)'
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('pokemon-search');
     const searchBtn = document.getElementById('search-btn');
@@ -13,9 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-/**
- * Filtert die angezeigten Pokémon-Karten live anhand der Eingabe.
- */
 function filterNames() {
     const input = document.getElementById('pokemon-search');
     if (!input) return;
@@ -45,9 +59,12 @@ function filterNames() {
     }
 }
 
-/**
- * Steuert das Öffnen der Detailansicht.
- */
+function setPokemonGradient(element, types) {
+    const color1 = TYPE_COLORS[types[0].type.name] || 'rgba(168, 168, 120, 0.85)';
+    const color2 = types[1] ? TYPE_COLORS[types[1].type.name] : color1;
+    element.style.background = `linear-gradient(135deg, ${color1}, ${color2})`;
+}
+
 function showPokemon(pokemonIndex) {
     if (!allPokemon[pokemonIndex]) return;
 
@@ -55,13 +72,13 @@ function showPokemon(pokemonIndex) {
     const currentPokemon = allPokemon[pokemonIndex];
     
     let typesHTML = '';
-    currentPokemon.types.forEach((type) => {
-        typesHTML += `<button class="type-button glass-effect shadow">${type.type.name}</button>`;
+    currentPokemon.types.forEach((t) => {
+        typesHTML += `<button class="type-button glass-effect shadow ${t.type.name}-type">${t.type.name}</button>`;
     });
 
     const detailsContainer = document.getElementById('pokemon-details');
     detailsContainer.innerHTML = showPokemonDiv(currentPokemon, typesHTML);
-    detailsContainer.className = `pokemon-details ${currentPokemon.types[0].type.name}-type`;
+    setPokemonGradient(detailsContainer, currentPokemon.types);
 
     document.getElementById('main-container').classList.add('d-none');
     document.getElementById('loadmore').classList.add('d-none');
@@ -70,9 +87,6 @@ function showPokemon(pokemonIndex) {
     showAbout();
 }
 
-/**
- * Schließt die Detailansicht und stellt das Haupt-Layout wieder her.
- */
 function closePokemon() {
     document.getElementById('pokemon-details').classList.add('d-none');
     document.getElementById('main-detail-container').classList.add('d-none');
@@ -82,7 +96,6 @@ function closePokemon() {
     clearAndDeselectTabs();
 }
 
-/* Tabs & Details Logik */
 function showAbout() {
     clearAndDeselectTabs();
     document.getElementById('about-contents').classList.remove('d-none');
@@ -186,9 +199,6 @@ function createBaseStatsChart(currentPokemon) {
     });
 }
 
-/**
- * Filtert die bereits geladenen Pokémon im Haupt-Container nach ihrem Typ.
- */
 function filterBySelectedType() {
     const selectedType = document.getElementById('type-select').value;
     const cards = document.getElementsByClassName('pokemon-card');
@@ -212,9 +222,6 @@ function filterBySelectedType() {
     }
 }
 
-/**
- * Setzt den Filter zurück und zeigt wieder alle Pokémon an (Home-Button).
- */
 function resetFilter() {
     const typeSelect = document.getElementById('type-select');
     const searchInput = document.getElementById('pokemon-search');
