@@ -4,18 +4,12 @@ let currentPokemonIndex = 0;
 let allPokemon = [];
 let baseStatsChart = null;
 
-/**
- * Lädt die initialen Pokémon beim Seitenstart.
- */
 async function loadPokemons() {
     for (let i = 1; i <= numberOfPokemons; i++) {
         await loadPokemon(i);
     }
 }
 
-/**
- * Holt die Daten eines Pokémon von der PokéAPI.
- */
 async function loadPokemon(data) {
     try {
         const url = `https://pokeapi.co/api/v2/pokemon/${data}`;
@@ -38,17 +32,11 @@ async function loadPokemon(data) {
     }
 }
 
-/**
- * Rendert die Karte in das Haupt-Container Element.
- */
 function generateMainContainer(currentPokemon, index, typesHTML) {
     const mainContainer = document.getElementById('main-container');
     mainContainer.innerHTML += generatePokemonDiv(currentPokemon, index, typesHTML);
 }
 
-/**
- * Lädt weitere Pokémon nach.
- */
 async function loadMore() {
     const start = numberOfPokemons + 1;
     const end = numberOfPokemons + more;
