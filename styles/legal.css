@@ -1,0 +1,44 @@
+.legal-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.legal-container h1 {
+    color: #356abc;
+    margin-bottom: 20px;
+}
+
+.legal-container h2 {
+    color: #356abc;
+    margin-top: 20px;
+    margin-bottom: 0;
+    font-size: 1.2rem;
+}
+
+.legal-container a {
+    color: #356abc;
+}
+
+.legal-container p {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    text-shadow: none;
+}
+
+.legal-container a {
+    text-decoration: none;
+}
+
+.legal-container a:hover {
+    text-decoration: underline;
+}
