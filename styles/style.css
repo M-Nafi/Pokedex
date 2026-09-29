@@ -16,7 +16,13 @@ body {
     margin: 0;
     font-family: 'Roboto', sans-serif;
     overflow-x: hidden !important;
-    background-color: #f1f1f1;
+    background-color: #f8fafc;
+    background-image: radial-gradient(rgba(15, 23, 42, 0.12) 2px, transparent 0);
+    background-size: 24px 24px;
+    background-position: -19px -19px;
+    background-attachment: fixed;
+    min-height: 100vh;
+    margin: 0;
     width: 100%;
     min-height: 100vh;
 }
