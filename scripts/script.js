@@ -3,38 +3,114 @@ let more = 30;
 let currentPokemonIndex = 0;
 let allPokemon = [];
 let baseStatsChart = null;
+let sweetAlertPromise = null;
 
 async function loadPokemons() {
-    for (let i = 1; i <= numberOfPokemons; i++) {
-        await loadPokemon(i);
-    }
+    await loadPokemonRange(1, numberOfPokemons);
 }
 
 async function loadPokemon(data) {
     try {
         const url = `https://pokeapi.co/api/v2/pokemon/${data}`;
         const response = await fetch(url);
-        const pokemon = await response.json();
-        
-        allPokemon.push(pokemon);
-        const index = allPokemon.length - 1;
-
-        let typesHTML = '';
-        pokemon.types.forEach((type) => {
-            typesHTML += `<button class="type-button glass-effect shadow ${type.type.name}-type">${type.type.name}</button>`;
-        });
-
-
-
-        generateMainContainer(pokemon, index, typesHTML);
+        if (!response.ok) {
+            throw new Error(`PokéAPI antwortete mit HTTP ${response.status}`);
+        }
+        return await response.json();
     } catch (error) {
-        console.error("Fehler beim Laden der Pokémon-Daten:", error);
+        console.error(`Fehler beim Laden von Pokémon ${data}:`, error);
+        return null;
     }
 }
 
-function generateMainContainer(currentPokemon, index, typesHTML) {
+async function loadPokemonRange(start, end) {
+    const batchSize = 6;
+    addPokemonPlaceholders(start, end);
+
+    for (let batchStart = start; batchStart <= end; batchStart += batchSize) {
+        const batchEnd = Math.min(batchStart + batchSize - 1, end);
+        await Promise.all(
+            Array.from({ length: batchEnd - batchStart + 1 }, async (_, offset) => {
+                const pokemonId = batchStart + offset;
+                const pokemon = await loadPokemon(pokemonId);
+
+                if (!pokemon) {
+                    const placeholder = document.getElementById(`pokemon-placeholder-${pokemonId}`);
+                    if (placeholder) {
+                        placeholder.classList.remove('pokemon-card-placeholder');
+                        placeholder.classList.add('pokemon-card-error');
+                        placeholder.removeAttribute('aria-hidden');
+                        placeholder.textContent = 'Pokémon konnte nicht geladen werden';
+                    }
+                    return;
+                }
+
+                const index = pokemonId - 1;
+                allPokemon[index] = pokemon;
+                const typesHTML = pokemon.types
+                    .map((type) => `<span class="type-button glass-effect shadow ${type.type.name}-type">${type.type.name}</span>`)
+                    .join('');
+
+                generateMainContainer(pokemon, index, typesHTML, pokemonId);
+            })
+        );
+    }
+}
+
+function addPokemonPlaceholders(start, end) {
     const mainContainer = document.getElementById('main-container');
-    mainContainer.innerHTML += generatePokemonDiv(currentPokemon, index, typesHTML);
+    const placeholders = document.createDocumentFragment();
+
+    for (let id = start; id <= end; id++) {
+        if (document.getElementById(`pokemon-placeholder-${id}`)) continue;
+
+        const placeholder = document.createElement('div');
+        placeholder.id = `pokemon-placeholder-${id}`;
+        placeholder.className = 'pokemon-card pokemon-card-placeholder';
+        placeholder.setAttribute('aria-hidden', 'true');
+        placeholders.append(placeholder);
+    }
+
+    mainContainer.append(placeholders);
+}
+
+function generateMainContainer(currentPokemon, index, typesHTML, pokemonId) {
+    const placeholder = document.getElementById(`pokemon-placeholder-${pokemonId}`);
+    if (!placeholder) {
+        throw new Error(`Platzhalter für Pokémon ${pokemonId} nicht gefunden`);
+    }
+
+    placeholder.outerHTML = generatePokemonDiv(currentPokemon, index, typesHTML);
+}
+
+function loadSweetAlert() {
+    if (window.Swal) return Promise.resolve(window.Swal);
+    if (sweetAlertPromise) return sweetAlertPromise;
+
+    sweetAlertPromise = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@9';
+        script.onload = () => {
+            if (!window.Swal) {
+                sweetAlertPromise = null;
+                reject(new Error('SweetAlert wurde geladen, ist aber nicht verfügbar'));
+                return;
+            }
+            resolve(window.Swal);
+        };
+        script.onerror = () => {
+            sweetAlertPromise = null;
+            reject(new Error('SweetAlert konnte nicht geladen werden'));
+        };
+        document.head.append(script);
+    });
+
+    return sweetAlertPromise;
+}
+
+async function showNoPokemonAlert(options) {
+    const swal = await loadSweetAlert();
+    await swal.fire(options);
 }
 
 async function loadMore() {
@@ -42,7 +118,7 @@ async function loadMore() {
     const end = numberOfPokemons + more;
     numberOfPokemons += more;
 
-    for (let i = start; i <= end; i++) {
-        await loadPokemon(i);
-    }
+    await loadPokemonRange(start, end);
 }
+
+document.addEventListener('DOMContentLoaded', loadPokemons);
