@@ -17,6 +17,7 @@ const TYPE_COLORS = {
     ghost: 'rgba(112, 88, 152, 0.85)',
     dragon: 'rgba(112, 56, 248, 0.85)'
 };
+let chartLibraryPromise = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('pokemon-search');
@@ -50,12 +51,12 @@ function filterNames() {
         }
     }
 
-    if (filter !== '' && found === 0 && typeof Swal !== 'undefined') {
-        Swal.fire({
+    if (filter !== '' && found === 0) {
+        showNoPokemonAlert({
             icon: 'info',
             title: 'Kein Pokémon gefunden',
             text: 'Bitte lade mehr Pokémon oder überprüfe deinen Suchbegriff.'
-        });
+        }).catch((error) => console.error('Suchhinweis konnte nicht angezeigt werden:', error));
     }
 }
 
@@ -70,10 +71,11 @@ function showPokemon(pokemonIndex) {
 
     currentPokemonIndex = pokemonIndex;
     const currentPokemon = allPokemon[pokemonIndex];
+    const triggerCard = document.querySelector(`[data-pokemon-index="${pokemonIndex}"]`);
     
     let typesHTML = '';
     currentPokemon.types.forEach((t) => {
-        typesHTML += `<button class="type-button glass-effect shadow ${t.type.name}-type">${t.type.name}</button>`;
+        typesHTML += `<span class="type-button glass-effect shadow ${t.type.name}-type">${t.type.name}</span>`;
     });
 
     const detailsContainer = document.getElementById('pokemon-details');
@@ -85,21 +87,25 @@ function showPokemon(pokemonIndex) {
     document.getElementById('main-detail-container').classList.remove('d-none');
     detailsContainer.classList.remove('d-none');
     showAbout();
+    document.querySelector('.navigate button[aria-label="Schließen"]').focus();
+    detailsContainer.dataset.triggerPokemonIndex = triggerCard?.dataset.pokemonIndex ?? '';
 }
 
 function closePokemon() {
+    const triggerPokemonIndex = document.getElementById('pokemon-details').dataset.triggerPokemonIndex;
     document.getElementById('pokemon-details').classList.add('d-none');
     document.getElementById('main-detail-container').classList.add('d-none');
     document.getElementById('main-container').classList.remove('d-none');
     document.getElementById('loadmore').classList.remove('d-none');
     
     clearAndDeselectTabs();
+    document.querySelector(`[data-pokemon-index="${triggerPokemonIndex}"]`)?.focus();
 }
 
 function showAbout() {
     clearAndDeselectTabs();
     document.getElementById('about-contents').classList.remove('d-none');
-    document.getElementById('about-tab').classList.add('selected');
+    selectTab('about-tab');
     
     const pokemon = allPokemon[currentPokemonIndex];
     document.getElementById('height').textContent = (pokemon.height / 10) + ' m';
@@ -112,17 +118,23 @@ function showAbout() {
     document.getElementById('abilities').innerHTML = abilitiesHTML;
 }
 
-function showBaseStats() {
+async function showBaseStats() {
     clearAndDeselectTabs();
     document.getElementById('base-contents').classList.remove('d-none');
-    document.getElementById('base-stats-tab').classList.add('selected');
-    createBaseStatsChart(allPokemon[currentPokemonIndex]);
+    selectTab('base-stats-tab');
+    document.getElementById('chart-error').classList.add('d-none');
+    try {
+        await createBaseStatsChart(allPokemon[currentPokemonIndex]);
+    } catch (error) {
+        console.error('Basiswerte konnten nicht dargestellt werden:', error);
+        document.getElementById('chart-error').classList.remove('d-none');
+    }
 }
 
 function showMoves() {
     clearAndDeselectTabs();
     document.getElementById('move-contents').classList.remove('d-none');
-    document.getElementById('moves-tab').classList.add('selected');
+    selectTab('moves-tab');
 
     const pokemon = allPokemon[currentPokemonIndex];
     let movesHTML = '';
@@ -139,35 +151,102 @@ function clearAndDeselectTabs() {
     });
     ['about-tab', 'base-stats-tab', 'moves-tab'].forEach(id => {
         const el = document.getElementById(id);
-        if (el) el.classList.remove('selected');
+        if (el) {
+            el.classList.remove('selected');
+            el.setAttribute('aria-selected', 'false');
+            el.tabIndex = -1;
+        }
     });
 }
 
+function selectTab(id) {
+    const tab = document.getElementById(id);
+    if (!tab) return;
+
+    tab.classList.add('selected');
+    tab.setAttribute('aria-selected', 'true');
+    tab.tabIndex = 0;
+}
+
+function handleTabKeydown(event) {
+    const tabs = [...document.querySelectorAll('.tabs [role="tab"]')];
+    const currentIndex = tabs.indexOf(event.currentTarget);
+    let nextIndex;
+
+    if (event.key === 'ArrowRight') {
+        nextIndex = (currentIndex + 1) % tabs.length;
+    } else if (event.key === 'ArrowLeft') {
+        nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+    } else if (event.key === 'Home') {
+        nextIndex = 0;
+    } else if (event.key === 'End') {
+        nextIndex = tabs.length - 1;
+    } else {
+        return;
+    }
+
+    event.preventDefault();
+    tabs[nextIndex].focus();
+    tabs[nextIndex].click();
+}
+
 function nextPokemon() {
-    if (currentPokemonIndex < allPokemon.length - 1) {
-        showPokemon(currentPokemonIndex + 1);
+    for (let index = currentPokemonIndex + 1; index < allPokemon.length; index++) {
+        if (allPokemon[index]) {
+            showPokemon(index);
+            return;
+        }
     }
 }
 
 function previousPokemon() {
-    if (currentPokemonIndex > 0) {
-        showPokemon(currentPokemonIndex - 1);
+    for (let index = currentPokemonIndex - 1; index >= 0; index--) {
+        if (allPokemon[index]) {
+            showPokemon(index);
+            return;
+        }
     }
 }
 
-function createBaseStatsChart(currentPokemon) {
+async function loadChartLibrary() {
+    if (window.Chart) return window.Chart;
+    if (chartLibraryPromise) return chartLibraryPromise;
+
+    chartLibraryPromise = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+        script.onload = () => {
+            if (!window.Chart) {
+                chartLibraryPromise = null;
+                reject(new Error('Chart.js wurde geladen, ist aber nicht verfügbar'));
+                return;
+            }
+            resolve(window.Chart);
+        };
+        script.onerror = () => {
+            chartLibraryPromise = null;
+            reject(new Error('Chart.js konnte nicht geladen werden'));
+        };
+        document.head.append(script);
+    });
+
+    return chartLibraryPromise;
+}
+
+async function createBaseStatsChart(currentPokemon) {
     const canvas = document.getElementById('base-stats-chart');
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
 
+    const ChartLibrary = await loadChartLibrary();
     if (baseStatsChart) {
         baseStatsChart.destroy();
     }
 
+    const ctx = canvas.getContext('2d');
     const labels = ['HP', 'Attack', 'Defense', 'Spec. Attack', 'Spec. Defense', 'Speed'];
     const baseStats = currentPokemon.stats.map(s => s.base_stat);
 
-    baseStatsChart = new Chart(ctx, {
+    baseStatsChart = new ChartLibrary(ctx, {
         type: 'radar',
         data: {
             labels: labels,
@@ -213,12 +292,12 @@ function filterBySelectedType() {
         }
     }
 
-    if (foundCount === 0 && selectedType !== 'all' && typeof Swal !== 'undefined') {
-        Swal.fire({
+    if (foundCount === 0 && selectedType !== 'all') {
+        showNoPokemonAlert({
             icon: 'info',
             title: 'Kein Pokémon gefunden',
             text: 'Unter den aktuell geladenen Pokémon ist keines dieses Typs. Klicke auf "Load More", um mehr zu laden!'
-        });
+        }).catch((error) => console.error('Filterhinweis konnte nicht angezeigt werden:', error));
     }
 }
 
