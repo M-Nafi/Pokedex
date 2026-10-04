@@ -3,13 +3,15 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Entdecke Pokémon, filtere nach Typ und sieh dir Werte, Fähigkeiten und Attacken in der Pokédex-App an." />
+        <link rel="preconnect" href="https://pokeapi.co" />
+        <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin />
+        <link rel="preload" as="image" href="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png" fetchpriority="high" />
+        <link rel="preload" as="image" href="assets/img/pokeball.png" fetchpriority="high" />
 
-        <script src="scripts/script.js"></script>
-        <script src="scripts/templates.js"></script>
-        <script src="scripts/render.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-
+        <script src="scripts/script.js" defer></script>
+        <script src="scripts/templates.js" defer></script>
+        <script src="scripts/render.js" defer></script>
         <link rel="icon" type="image/png" sizes="32x32" href="assets/img/pokeballfavicon.png">
         <link rel="icon" type="image/png" sizes="16x16" href="assets/img/pokeballfavicon.png">
         <link rel="apple-touch-icon" sizes="180x180" href="assets/img/pokeballfavicon.png">
@@ -24,7 +26,7 @@
         <title>Pokedex</title>
     </head>
 
-    <body onload="loadPokemons()">
+    <body>
         <header class="pokedex-header">
             <div class="pokedex-top-bar">
                 <div class="lights-container">
@@ -43,11 +45,13 @@
                 </div>
                 
                 <div class="search-box">
+                    <label class="visually-hidden" for="pokemon-search">Pokémon suchen</label>
                     <input type="text" id="pokemon-search" placeholder="Name eingeben..." />
-                    <button id="search-btn">🔍</button>
+                    <button id="search-btn" type="button" aria-label="Suche starten">🔍</button>
                 </div>
 
                 <div class="type-filter-box">
+                    <label class="visually-hidden" for="type-select">Nach Typ filtern</label>
                     <select id="type-select" onchange="filterBySelectedType()">
                         <option value="all">Alle Typen</option>
                         <option value="fire">Feuer</option>
@@ -76,9 +80,40 @@
 
         </header>
 
-        <div class="content-wrapper">
+        <main class="content-wrapper">
 
-            <div class="main-container" id="main-container"></div>
+            <div class="main-container" id="main-container">
+                <div id="pokemon-placeholder-1" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-2" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-3" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-4" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-5" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-6" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-7" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-8" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-9" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-10" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-11" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-12" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-13" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-14" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-15" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-16" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-17" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-18" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-19" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-20" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-21" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-22" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-23" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-24" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-25" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-26" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-27" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-28" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-29" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+                <div id="pokemon-placeholder-30" class="pokemon-card pokemon-card-placeholder" aria-hidden="true"></div>
+            </div>
 
             <div id="loadmore" class="lomopo">
                 <button class="loadmore-button glass-effect" onclick="loadMore()">Mehr laden</button>
@@ -87,7 +122,7 @@
             <div class="main-detail-container d-none" id="main-detail-container">
                 <div class="pokemon-details d-none" id="pokemon-details"></div>
             </div>
-        </div>
+        </main>
 
         <footer class="pokedex-footer">
             <div class="footer-content">
