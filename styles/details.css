@@ -100,6 +100,7 @@
     position: relative;
     margin-top: auto;
     height: 340px;
+    width: 90%;
     flex-shrink: 0;
     border-radius: 40px;
     z-index: 20;
@@ -141,7 +142,6 @@
 .tab {
     flex: 1;
     cursor: pointer;
-    padding: 0 12px;
     height: 36px;
     display: flex;
     align-items: center;
@@ -153,8 +153,7 @@
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     font: inherit;
-    font-size: 24px;
-    font-weight: 700;
+    font-size: 20px;
 }
 
 .tab.selected,
