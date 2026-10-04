@@ -1,9 +1,4 @@
 @media (max-width: 430px) {
-    .main-detail-container {
-        padding: 16px 0;
-        height: auto;
-    }
-
     .pokemon-details {
         width: 340px;
         height: auto;
