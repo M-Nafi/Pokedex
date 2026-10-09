@@ -69,8 +69,9 @@
 .navigate {
     display: flex;
     width: 100%;
+    max-width: 90%;
     padding: 8px 0;
-    justify-content: space-around;
+    justify-content: space-between;
     z-index: 2;
     flex-shrink: 0;
 }
